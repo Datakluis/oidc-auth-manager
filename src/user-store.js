@@ -1,6 +1,6 @@
 'use strict'
 
-const KVPFileStore = require('kvplus-files')
+const KVPSQLiteStore = require('kvplus-sqlite')
 const bcrypt = require('bcryptjs')
 
 const DEFAULT_SALT_ROUNDS = 10
@@ -52,13 +52,13 @@ class UserStore {
     options.saltRounds = options.saltRounds || DEFAULT_SALT_ROUNDS
 
     const storeOptions = UserStore.backendOptionsFor(options.path)
-    options.backend = new KVPFileStore(storeOptions)
+    options.backend = new KVPSQLiteStore(storeOptions)
 
     return new UserStore(options)
   }
 
   /**
-   * Constructs and returns options for initializing a default KVPFileStore
+   * Constructs and returns options for initializing a default KVPSQLiteStore
    * instance.
    *
    * @param path {string} Directory path where the various collections

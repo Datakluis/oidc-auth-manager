@@ -5,7 +5,7 @@ const path = require('path')
 const { URL } = require('whatwg-url')
 const validUrl = require('valid-url')
 const ResourceAuthenticator = require('@solid/oidc-rs')
-const KVPFileStore = require('kvplus-files')
+const KVPSQLiteStore = require('kvplus-sqlite')
 const MultiRpClient = require('@solid/solid-multi-rp-client')
 const OIDCProvider = require('@solid/oidc-op')
 const UserStore = require('./user-store')
@@ -237,7 +237,7 @@ class OidcManager {
       post_logout_redirect_uris: [this.postLogoutUri]
     }
 
-    const backend = new KVPFileStore({
+    const backend = new KVPSQLiteStore({
       path: this.storePaths.multiRpStore,
       collections: ['clients']
     })
@@ -284,7 +284,7 @@ class OidcManager {
       provider.keys = providerConfig.keys
     }
 
-    const backend = new KVPFileStore({
+    const backend = new KVPSQLiteStore({
       path: this.storePaths.providerStore,
       collections: ['codes', 'clients', 'tokens', 'refresh']
     })
